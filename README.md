@@ -3,9 +3,10 @@
    ...install by terminal  npm create vite@latest
    
 2. we set the taikwind in react app 
-   ...intall  npm install -D tailwindcss
+   ...intall  npm install -D tailwindcss postcss autoprefixer
+              npx tailwindcss init -p
               npx tailwindcss init
-   ...content  content: ["./src/**/*.{js,jsx,ts,tsx}",]
+   ...content  content: [  "./index.html", "./src/**/*.{js,jsx,ts,tsx}",]
    ... index.css file @tailwind base;
                       @tailwind components;
                       @tailwind utilities;

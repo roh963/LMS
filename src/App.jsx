@@ -1,13 +1,15 @@
 import './App.css'
-import { Routes } from 'react-router-dom'
+import Footer from './component/Footer'
+// import { Routes } from 'react-router-dom'
 function App() {
   
 
   return (
     <>
-      <Routes>
-
-      </Routes>
+      {/* <Routes>
+      
+      </Routes> */}
+      <Footer/>
     </>
   )
 }
