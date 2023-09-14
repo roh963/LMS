@@ -1,16 +1,5 @@
-
-
-
-// css
 import './App.css'
-//library
 import { Routes } from 'react-router-dom'
-
-
-
-
-
-
 function App() {
   
 
