@@ -9,3 +9,7 @@
    ... index.css file @tailwind base;
                       @tailwind components;
                       @tailwind utilities;
+3. install dependency 
+   ....  npm install @reduxjs/toolkit react-redux react-router-dom react-icons react-chartjs-2 
+   ....  npm install      chart.js daisyui axios react-hot-toast    
+   ....  npm install    @tailwindcss/line-clamp
