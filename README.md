@@ -17,4 +17,4 @@
    ...  Toaster 
 5. import the reduxtoolkit  authuntication in slice 
    store the reducer in store file 
-   
+6. axios import  and set up to the bakend 
