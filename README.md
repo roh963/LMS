@@ -10,6 +10,8 @@
    ... index.css file @tailwind base;
                       @tailwind components;
                       @tailwind utilities;
+   ... add the following details in the plugin of tailwind
+        plugins: [require("daisyui"),require("@tailwindcss/line-clamp")]
 3. install dependency 
    ...  npm install @reduxjs/toolkit react-redux react-router-dom react-icons react-chartjs-2 
    ...  npm install      chart.js daisyui axios react-hot-toast    
