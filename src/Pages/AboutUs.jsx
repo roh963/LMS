@@ -4,7 +4,7 @@ import CarousalSlide from "../component/CarousalSlide";
 import { celebrities } from "../constant/CelebrityData";
 
 function AboutUs(){
-return(<HomeLayout cl>
+return(<HomeLayout>
     <div className="pl-20 pt-20 flex flex-col text-white">
         <div className=" flex items-center gap-5 mx-10 ">
            <section className=" w-1/2 space-y-10 ">
