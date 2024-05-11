@@ -1,5 +1,8 @@
+import asyncHandler from "../middlewares/asyncHandler.middleware.js";
 import User from "../models/user.model.js";
 import AppError from "../utils/errors.utils.js";
+import cloudinary from "cloudinary"
+import fs from 'fs/promises'
 
 const cookieOption ={
    maxAge:7*24*60*60*1000,  //7day
@@ -7,8 +10,7 @@ const cookieOption ={
    secureL:true
 
 }
-
-const register = async(req,res,next)=>{
+const register = asyncHandler( async(req,res,next)=>{
    const {fullName , email, password} = req.body; 
 
    if(!fullName || !email ||!password){
@@ -24,7 +26,7 @@ const register = async(req,res,next)=>{
     fullName,
     email,
     password,
-    avator:{
+    avatar:{
         public_id:email,
         secure_url:'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg'
     }
@@ -33,21 +35,46 @@ const register = async(req,res,next)=>{
       return next(new AppError("User registrantion failed ,please try again",400))
    }
    //todo: fild upload 
+   console.log(`file details ->`,JSON.stringify(req.file));
+   if(req.file) {
+      try {
+         const result = await cloudinary.v2.uploader.upload(req.file.path,{
+             folder:'lms',
+             width:250,
+             height:250,
+             gravity:'faces',
+             crop:'fill'
+         });
+          
+         if(result){
+            user.avatar.public_id = result.public_id;
+            user.avatar.secure_url = result.secure_url;
+         }
+         // remove file from e server 
+         fs.rm(`uploads/${req.file.filename}`)
+
+      } catch (e) {
+         return next( new AppError(error|| 'fiel not uploaded, please  try again',404));
+      }
+   }
+
+
+
 
    await user.save();
    user.password = undefined;
 
    const token = await user.generateJWTTOken();
 
-   res.res.cookie('token', token,cookieOption);
+   res.cookie('token', token,cookieOption);
 
    res.status(201).json({
       success:true,
       message:"user registered successfuly",
       user,
-   });;
-}
-const logIn  = async(req,res)=>{
+   });
+});
+const logIn  =  asyncHandler(async(req,res,next)=>{
   try {
    const {email,password} = req.body;
    if (!email || !password) {
@@ -58,7 +85,7 @@ const logIn  = async(req,res)=>{
       email
    }).select('+password');
 
-   if(! user || !user.comparePassword(password)){
+   if(! (user || await user.comparePassword(password))){
       return next(new AppError('email or password does not match',400))  
    }
 
@@ -66,7 +93,7 @@ const logIn  = async(req,res)=>{
    const token = await user.generateJWTTOken();
    user.password = undefined;
 
-   res.res.cookie('token', token,cookieOption);
+   res.cookie('token', token,cookieOption);
 
    res.status(201).json({
       success:true,
@@ -76,8 +103,8 @@ const logIn  = async(req,res)=>{
   } catch (error) {
    return next(new AppError(error.message,500))
   }
-};
-const logOut = async(req,res)=>{
+});
+const logOut =asyncHandler( async(req,res,next)=>{
    res.cookie("token", null,{
       maxAge:0,  //7day
       httpOnly:true,
@@ -89,8 +116,8 @@ const logOut = async(req,res)=>{
       message:"user logOut successfuly",
    
    });
-}
-const getProfile = async(req,res)=>{
+});
+const getProfile = asyncHandler(async(req,res,next)=>{
 
    try {
       const userId = req.user.id;
@@ -107,12 +134,21 @@ const getProfile = async(req,res)=>{
       return next(new AppError("failed to fetch profile ",501))
    }
       
-}
+});
+
+const forgotPassword = asyncHandler(async(req,res,next)=>{
+   
+});
+const resetPassword = asyncHandler(async(req,res,next)=>{
+
+});
 
 
  export {
     register,
     logIn,
     logOut,
-    getProfile
+    getProfile,
+    forgotPassword,
+    resetPassword
  };
