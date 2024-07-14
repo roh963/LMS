@@ -1,1 +1,1 @@
-Basic setup of vite react App
+# Basic setup of vite react App
