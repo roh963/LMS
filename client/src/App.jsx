@@ -1,17 +1,20 @@
 import { useState } from 'react'
-import './App.css'
-import viteLogo from '/vite.svg'
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import HomePage from './Pages/HomePage'
+
+
+
+
 
 function App() {
-
   return (
     <>
-      <div className="bg-slate-600">
-      <button className="bg-cyan-500 hover:bg-cyan-600 ...">Subscribe</button>
-       <h1 className='text-end'>hello world
-       </h1>
-      </div>
-      
+      <Routes>
+        <Route path="/" element={<HomePage />} ></Route>
+
+      </Routes>
+
     </>
   )
 }

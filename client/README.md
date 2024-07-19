@@ -13,3 +13,7 @@
 #  }
 #
 # https://stackoverflow.com/questions/66288645/vite-does-not-build-tailwind-based-on-config
+#
+# 3.Daisy UI tailwind.config.js   daisyui: {
+#    themes: ["light", "dark", "cupcake","night"],
+ # },
