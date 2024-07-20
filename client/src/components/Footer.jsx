@@ -12,19 +12,19 @@ export default function Footer() {
             Copy right {year} | All rights reserved
           </section>
           <section className=" flex sm:flex-row items-center justify-end  text-2xl gap-5 text-white">
-            <a href="" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
+            <a href="*" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
               <BsInstagram className="icon" />
             </a>
-             <a href="" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
+             <a href="*" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
                 <BsLinkedin className="icon" />
              </a>
-            <a href="" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
+            <a href="*" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
               <BsTwitter className="icon" />
             </a>
-            <a href="" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
+            <a href="*" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
               <BsGithub className="icon" />
             </a>
-            <a href="" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
+            <a href="*" className="hover:text-yellow-500 transition-all ease-in-out duration-300">
               <BsFacebook className="icon" />
             </a>
           </section>
