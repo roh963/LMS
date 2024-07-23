@@ -6,6 +6,7 @@ import morgan from 'morgan'
 import userRoutes from './routes/user.routes.js'
 import courseRoutes from './routes/course.routes.js'
 import errorMiddleware from './middlewares/errorMiddleware.js'
+
 config()
 
 const app = express();

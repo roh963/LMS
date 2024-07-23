@@ -13,12 +13,11 @@ const cookieOption ={
 
 }
 const register = asyncHandler( async(req,res,next)=>{
-   const {fullName , email, password} = req.body; 
+   const {fullName , email, password ,role} = req.body; 
 
    if(!fullName || !email ||!password){
      return next(new AppError('All fields are required',400)) 
    }
-
    const userExist = await User.findOne({email});
 
    if(userExist){
@@ -61,7 +60,7 @@ const register = asyncHandler( async(req,res,next)=>{
    }
 
 
-
+  
 
    await user.save();
    user.password = undefined;
