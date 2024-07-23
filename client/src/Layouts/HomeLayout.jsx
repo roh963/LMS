@@ -3,6 +3,7 @@ import {FiMenu} from 'react-icons/fi';
 import Footer from '../components/Footer';
 import { Link ,useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../Redux/Slices/Auth.slices';
 function HomeLayout({children}) {
       
     const dispatch = useDispatch();
@@ -27,11 +28,13 @@ function HomeLayout({children}) {
       
         
     }
-    function handleLogout(e) {
+     async function handleLogout(e) {
          e.preventDefault();
-         // const res = await dispatch(logout());
-         // if(res?.payload?.success)
-         navigate("/");
+         const res = await dispatch(logout());
+         if(res?.payload?.success){
+            navigate("/");
+         }
+        
         }
     
   return (
@@ -59,7 +62,7 @@ function HomeLayout({children}) {
                             <Link to="/">Home</Link>
                         </li>
                          {
-                            isLoggedIn && role === "ADMIN" (
+                            isLoggedIn && role === "ADMIN"&& (
                                 <li>
                                 <Link to="/admin/dashboard"> Admin DashBoard</Link>
                                 </li>
@@ -86,7 +89,7 @@ function HomeLayout({children}) {
                                         <Link to="/login">Login</Link>
                                     </button>
                                     <button type="button" className="btn btn-secondary px-4 py-1 font-semibold rounded-md w-1/2">
-                                        <Link to="/login">Signup</Link>
+                                        <Link to="/signup">Signup</Link>
                                     </button>
                                 </div>
                             </li>
@@ -97,11 +100,11 @@ function HomeLayout({children}) {
                             isLoggedIn &&(
                                 <li className="absolute bottom-4 w-[90%]">
                                 <div className="w-full flex items-center justify-between">
-                                    <button type="button" className="btn-primary px-4 py-1 font-semibold rounded-md  mx-1  w-1/2 ">
+                                    <button type="button" className=" btn btn-primary px-4 py-1 font-semibold rounded-md  mx-1  w-1/2 ">
                                         <Link to="/user/profile">Profile</Link>
                                     </button>
-                                    <button type="button" className="btn btn-secondary px-4 py-1 font-semibold rounded-md mx-1 w-1/2">
-                                        <Link onClick={handleLogout}>Logout</Link>
+                                    <button  onClick={handleLogout} type="button" className="btn btn-secondary px-4 py-1 font-semibold rounded-md mx-1 w-1/2">
+                                        <Link>Logout</Link>
                                     </button>
                                 </div>
                                 </li>
