@@ -1,4 +1,3 @@
-import asyncHandler from "../middlewares/asyncHandler.middleware.js";
 import User from "../models/user.model.js";
 import AppError from "../utils/errors.utils.js";
 import cloudinary from "cloudinary"
@@ -12,7 +11,7 @@ const cookieOption ={
    secureL:true
 
 }
-const register = asyncHandler( async(req,res,next)=>{
+const register = async(req,res,next)=>{
    const {fullName , email, password ,role} = req.body; 
 
    if(!fullName || !email ||!password){
@@ -52,7 +51,7 @@ const register = asyncHandler( async(req,res,next)=>{
             user.avatar.secure_url = result.secure_url;
          }
          // remove file from e server 
-         fs.rm(`uploads/${req.file.filename}`)
+         fs.rm(`uploads/${req.file.filename}`);
 
       } catch (e) {
          return next( new AppError(error|| 'fiel not uploaded, please  try again',404));
@@ -74,8 +73,8 @@ const register = asyncHandler( async(req,res,next)=>{
       message:"user registered successfuly",
       user,
    });
-});
-const logIn  =  asyncHandler(async(req,res,next)=>{
+};
+const logIn  = async(req,res,next)=>{
   try {
    const {email,password} = req.body;
    if (!email || !password) {
@@ -104,8 +103,8 @@ const logIn  =  asyncHandler(async(req,res,next)=>{
   } catch (error) {
    return next(new AppError(error.message,500))
   }
-});
-const logOut =asyncHandler( async(req,res,next)=>{
+};
+const logOut =async(req,res,next)=>{
    res.cookie("token", null,{
       maxAge:0,  //7day
       httpOnly:true,
@@ -117,8 +116,8 @@ const logOut =asyncHandler( async(req,res,next)=>{
       message:"user logOut successfuly",
    
    });
-});
-const getProfile = asyncHandler(async(req,res,next)=>{
+};
+const getProfile =async(req,res,next)=>{
 
    try {
       const userId = req.user.id;
@@ -135,9 +134,9 @@ const getProfile = asyncHandler(async(req,res,next)=>{
       return next(new AppError("failed to fetch profile ",501))
    }
       
-});
+};
 
-const forgotPassword = asyncHandler(async(req,res,next)=>{
+const forgotPassword = async(req,res,next)=>{
    const {email } = req.body;
    if (!email) {
       return next(new AppError('email is requied ',400));
@@ -171,8 +170,8 @@ const forgotPassword = asyncHandler(async(req,res,next)=>{
       await user.save();
       return next(new AppError(e.message,500));
    }
-});
-const resetPassword = asyncHandler(async(req,res,next)=>{
+};
+const resetPassword = async(req,res,next)=>{
         const {resetToken} = req.params;
 
         const {password} =req.body;
@@ -201,8 +200,8 @@ const resetPassword = asyncHandler(async(req,res,next)=>{
          })
 
 
-});
-  const changePassword=asyncHandler(async(req,res,next)=>{
+};
+  const changePassword=async(req,res,next)=>{
    const {oldPassword,newPassword} =req.body;
    const {id} = req.user;
 
@@ -227,8 +226,8 @@ const resetPassword = asyncHandler(async(req,res,next)=>{
       success:true,
       message:"password changed succesfully"
    });
-  });
-  const updateUser = asyncHandler(async(req,res,next)=>{
+  };
+  const updateUser = async(req,res,next)=>{
      const {fullName} = req.body;
      const {id} = user.params;
 
@@ -268,7 +267,7 @@ const resetPassword = asyncHandler(async(req,res,next)=>{
       success:true,
       message:"user profile updated succesfully"
      })
-  });
+  };
 
  export {
     register,

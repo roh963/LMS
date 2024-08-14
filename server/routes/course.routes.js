@@ -1,31 +1,23 @@
 import { Router } from 'express';
-import { authorizeRoles, authorizeSubscribers, isLoggedIn } from '../middlewares/auth.middlware.js';
-import { addLectureToCourseById, createCourse, getAllCourses, getLecturesByCoursId, removeLectureFromCourse, updateCourseById } from '../contoller/course.contoller.js';
+const router = Router();
+import {authorizeRoles, authorizeSubscribers, isLoggedIn } from '../middlewares/auth.middlware.js';
+import { getAllCourses, getLecturesByCoursId, createCourse, updateCourse, removeCourse, addLectureToCourseById, deleteCourseLecture, updateCourseLecture } from '../contoller/course.contoller.js';
 import upload from "../middlewares/multer.middleware.js"
 
-const router = Router();
 
-router
-    .route('/')
-    .get(getAllCourses)
-    .post(
-        isLoggedIn,
-        authorizeRoles('ADMIN'),
-        upload.single('thumbnail'),
-        createCourse
-    )
-    .delete(isLoggedIn, authorizeRoles('ADMIN'), removeLectureFromCourse);
+router.route('/')
+    .get(isLoggedIn, getAllCourses)
+    .post(isLoggedIn, authorizeRoles('ADMIN'), upload.single("thumbnail"), createCourse)
+    .delete( isLoggedIn, authorizeRoles('ADMIN'), deleteCourseLecture)
+    .put(isLoggedIn, authorizeRoles('ADMIN'), upload.single("lecture"), updateCourseLecture)
 
-router
-    .route('/:id')
-    .get(isLoggedIn, authorizeSubscribers,getLecturesByCoursId) // Added authorizeSubscribers to check if user is admin or subscribed if not then forbid the access to the lectures
-    .post(
-        isLoggedIn,
-        authorizeRoles('ADMIN'),
-        upload.single('lecture'),
-        addLectureToCourseById
-    )
-    .put(isLoggedIn, authorizeRoles('ADMIN'), updateCourseById);
 
+router.route('/:id')
+    .get(isLoggedIn,authorizeSubscribers, getLecturesByCoursId)
+    .put(isLoggedIn, authorizeRoles('ADMIN'), updateCourse)
+    .delete(isLoggedIn, authorizeRoles('ADMIN'), removeCourse)
+    .post(isLoggedIn,authorizeRoles('ADMIN'),upload.single("lecture"), addLectureToCourseById)
+
+   
 
 export default router;

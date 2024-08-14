@@ -6,6 +6,7 @@ import morgan from 'morgan'
 import userRoutes from './routes/user.routes.js'
 import courseRoutes from './routes/course.routes.js'
 import errorMiddleware from './middlewares/errorMiddleware.js'
+import miscellaneousRoutes from './routes/miscellaneous.routes.js';
 
 config()
 
@@ -25,7 +26,8 @@ app.use('/ping',function(req,res){
     res.send('/pong')
 })
 app.use('/api/v1/user',userRoutes);
-app.use('/api/v1/course',courseRoutes);
+app.use('/api/v1/courses',courseRoutes);
+app.use('/api/v1/', miscellaneousRoutes);
 
 
 app.all('*',(req,res)=>{
