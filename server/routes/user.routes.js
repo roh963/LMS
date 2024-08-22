@@ -12,6 +12,6 @@ routes.get("/me",isLoggedIn,getProfile);
 routes.post("/forgot/password",forgotPassword);
 routes.post("/resetpassword/:resetToken",resetPassword);
 routes.post("/changepassword", isLoggedIn, changePassword);
-routes.put("/update",isLoggedIn,upload.single("avatar"),updateUser)
+routes.put("/update/:id",isLoggedIn,upload.single("avatar"),updateUser)
 
 export default routes;

@@ -5,7 +5,7 @@ import User from '../models/user.model.js';
 import AppError from '../utils/errors.utils.js';
 import { razorpay } from '../server.js';
 import Payment from '../models/Payment.model.js';
-import Razorpay from 'razorpay';
+
 
 /**
  * @ACTIVATE_SUBSCRIPTION
@@ -56,8 +56,7 @@ export const buySubscription = asyncHandler(async (req, res, next) => {
  */
 export const verifySubscription = asyncHandler(async (req, res, next) => {
   const { id } = req.user;
-  const { razorpay_payment_id, razorpay_subscription_id, razorpay_signature } =
-    req.body;
+  const { razorpay_payment_id, razorpay_subscription_id, razorpay_signature } =req.body;
 
   // Finding the user
   const user = await User.findById(id);

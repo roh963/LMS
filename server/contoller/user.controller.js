@@ -229,7 +229,7 @@ const resetPassword = async(req,res,next)=>{
   };
   const updateUser = async(req,res,next)=>{
      const {fullName} = req.body;
-     const {id} = user.params;
+     const {id} = req.user;
 
      const user = await User.findById(id);
 
@@ -253,9 +253,9 @@ const resetPassword = async(req,res,next)=>{
          if(result){
             user.avatar.public_id = result.public_id;
             user.avatar.secure_url = result.secure_url;
+            fs.rm(`uploads/${req.file.filename}`)
          }
          // remove file from e server 
-         fs.rm(`uploads/${req.file.filename}`)
 
       } catch (e) {
          return next( new AppError(error|| 'file not uploaded, please  try again',404));
